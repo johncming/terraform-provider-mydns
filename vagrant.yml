@@ -8,5 +8,6 @@
   tasks:
     - command: go get -u github.com/hashicorp/terraform
       environment:
+        GOPATH: "{{ ansible_user_dir }}/.go"
         PATH: "{{ ansible_env.PATH }}:/usr/local/go/bin"
       ignore_errors: yes
