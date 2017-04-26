@@ -13,7 +13,11 @@
       ignore_errors: yes
     - blockinfile:
         path: "{{ ansible_user_dir }}/.terraformrc"
+        create: yes
         block: |
           providers {
               mydns = "/vagrant/mydns"
           }
+    - lineinfile:
+        path: "{{ ansible_user_dir }}/.bashrc"
+        line: "export GOPATH=$GOPATH:/vagrant/"
