@@ -1,0 +1,9 @@
+---
+- hosts: all
+  roles:
+    - johncming.emacs
+    - johncming.go
+
+- hosts: all
+  tasks:
+    - command: go get -u github.com/hashicorp/terraform
