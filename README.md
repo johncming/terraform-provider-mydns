@@ -1,11 +1,11 @@
-Mydns ( A Plugin Of Terraform
+Mydns Plugin (A Plugin Of Terraform)
 ========
 
-部署环境
+Init env
 --------
 
-1. 生成`$HOME/.terraformrc`
-2. 输入以下内容:
+1. Create a file `$HOME/.terraformrc`
+2. File content:
 
     ```
     providers {
