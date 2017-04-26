@@ -7,3 +7,6 @@
 - hosts: all
   tasks:
     - command: go get -u github.com/hashicorp/terraform
+      environment:
+        PATH: "{{ ansible_env.PATH }}:/usr/local/go/bin"
+      ignore_errors: yes
