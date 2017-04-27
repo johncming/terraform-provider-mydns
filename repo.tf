@@ -5,7 +5,7 @@ provider "github" {
   organization = ""
 }
 
-resource "github_repository" "terraform-mydns" {
-  name        = "terraform-mydns"
+resource "github_repository" "terraform-provider-mydns" {
+  name        = "terraform-provider-mydns"
   description = "A plugin for terraform"
 }
