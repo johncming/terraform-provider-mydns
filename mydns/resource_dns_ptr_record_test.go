@@ -19,13 +19,13 @@ func TestAccDnsPtrRecord_basic(t *testing.T) {
 			resource.TestStep{
 				Config: testAccDnsPtrRecord_basic,
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckDnsPtrRecordExists(t, "dns_ptr_record.foo", "bar.example.com."),
+					testAccCheckDnsPtrRecordExists(t, "mydns_ptr_record.foo", "bar.example.com."),
 				),
 			},
 			resource.TestStep{
 				Config: testAccDnsPtrRecord_update,
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckDnsPtrRecordExists(t, "dns_ptr_record.foo", "baz.example.com."),
+					testAccCheckDnsPtrRecordExists(t, "mydns_ptr_record.foo", "baz.example.com."),
 				),
 			},
 		},
@@ -37,7 +37,7 @@ func testAccCheckDnsPtrRecordDestroy(s *terraform.State) error {
 	c := meta.(*DNSClient).c
 	srv_addr := meta.(*DNSClient).srv_addr
 	for _, rs := range s.RootModule().Resources {
-		if rs.Type != "dns_ptr_record" {
+		if rs.Type != "mydns_ptr_record" {
 			continue
 		}
 
@@ -113,7 +113,7 @@ func testAccCheckDnsPtrRecordExists(t *testing.T, n string, expected string) res
 }
 
 var testAccDnsPtrRecord_basic = fmt.Sprintf(`
-  resource "dns_ptr_record" "foo" {
+  resource "mydns_ptr_record" "foo" {
     zone = "example.com."
     name = "r._dns-sd._udp"
     ptr = "bar.example.com."
@@ -121,7 +121,7 @@ var testAccDnsPtrRecord_basic = fmt.Sprintf(`
   }`)
 
 var testAccDnsPtrRecord_update = fmt.Sprintf(`
-  resource "dns_ptr_record" "foo" {
+  resource "mydns_ptr_record" "foo" {
     zone = "example.com."
     name = "r._dns-sd._udp"
     ptr = "baz.example.com."

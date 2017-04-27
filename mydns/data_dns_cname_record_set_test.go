@@ -13,7 +13,7 @@ func TestAccDnsCnameRecordSet_Basic(t *testing.T) {
 	}{
 		{
 			`
-			data "dns_cname_record_set" "foo" {
+			data "mydns_cname_record_set" "foo" {
 			  host = "www.hashicorp.com"
 			}
 			`,
@@ -28,7 +28,7 @@ func TestAccDnsCnameRecordSet_Basic(t *testing.T) {
 				r.TestStep{
 					Config: test.DataSourceBlock,
 					Check: r.ComposeTestCheckFunc(
-						r.TestCheckResourceAttr("data.dns_cname_record_set.foo", "cname", test.Expected),
+						r.TestCheckResourceAttr("data.mydns_cname_record_set.foo", "cname", test.Expected),
 					),
 				},
 			},

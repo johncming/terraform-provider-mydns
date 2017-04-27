@@ -20,15 +20,15 @@ func TestAccDnsAAAARecordSet_basic(t *testing.T) {
 			resource.TestStep{
 				Config: testAccDnsAAAARecordSet_basic,
 				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("dns_aaaa_record_set.bar", "addresses.#", "2"),
-					testAccCheckDnsAAAARecordSetExists(t, "dns_aaaa_record_set.bar", []interface{}{"fdd5:e282:43b8:5303:dead:beef:cafe:babe", "fdd5:e282:43b8:5303:cafe:babe:dead:beef"}),
+					resource.TestCheckResourceAttr("mydns_aaaa_record_set.bar", "addresses.#", "2"),
+					testAccCheckDnsAAAARecordSetExists(t, "mydns_aaaa_record_set.bar", []interface{}{"fdd5:e282:43b8:5303:dead:beef:cafe:babe", "fdd5:e282:43b8:5303:cafe:babe:dead:beef"}),
 				),
 			},
 			resource.TestStep{
 				Config: testAccDnsAAAARecordSet_update,
 				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("dns_aaaa_record_set.bar", "addresses.#", "2"),
-					testAccCheckDnsAAAARecordSetExists(t, "dns_aaaa_record_set.bar", []interface{}{"fdd5:e282:43b8:5303:beef:dead:babe:cafe", "fdd5:e282:43b8:5303:babe:cafe:beef:dead"}),
+					resource.TestCheckResourceAttr("mydns_aaaa_record_set.bar", "addresses.#", "2"),
+					testAccCheckDnsAAAARecordSetExists(t, "mydns_aaaa_record_set.bar", []interface{}{"fdd5:e282:43b8:5303:beef:dead:babe:cafe", "fdd5:e282:43b8:5303:babe:cafe:beef:dead"}),
 				),
 			},
 		},
@@ -40,7 +40,7 @@ func testAccCheckDnsAAAARecordSetDestroy(s *terraform.State) error {
 	c := meta.(*DNSClient).c
 	srv_addr := meta.(*DNSClient).srv_addr
 	for _, rs := range s.RootModule().Resources {
-		if rs.Type != "dns_aaaa_record_set" {
+		if rs.Type != "mydns_aaaa_record_set" {
 			continue
 		}
 
@@ -117,7 +117,7 @@ func testAccCheckDnsAAAARecordSetExists(t *testing.T, n string, addr []interface
 }
 
 var testAccDnsAAAARecordSet_basic = fmt.Sprintf(`
-  resource "dns_aaaa_record_set" "bar" {
+  resource "mydns_aaaa_record_set" "bar" {
     zone = "example.com."
     name = "bar"
     addresses = ["fdd5:e282:43b8:5303:dead:beef:cafe:babe", "fdd5:e282:43b8:5303:cafe:babe:dead:beef"]
@@ -125,7 +125,7 @@ var testAccDnsAAAARecordSet_basic = fmt.Sprintf(`
   }`)
 
 var testAccDnsAAAARecordSet_update = fmt.Sprintf(`
-  resource "dns_aaaa_record_set" "bar" {
+  resource "mydns_aaaa_record_set" "bar" {
     zone = "example.com."
     name = "bar"
     addresses = ["fdd5:e282:43b8:5303:beef:dead:babe:cafe", "fdd5:e282:43b8:5303:babe:cafe:beef:dead"]

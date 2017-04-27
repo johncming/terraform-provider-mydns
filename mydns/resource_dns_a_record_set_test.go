@@ -20,15 +20,15 @@ func TestAccDnsARecordSet_Basic(t *testing.T) {
 			resource.TestStep{
 				Config: testAccDnsARecordSet_basic,
 				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("dns_a_record_set.foo", "addresses.#", "2"),
-					testAccCheckDnsARecordSetExists(t, "dns_a_record_set.foo", []interface{}{"192.168.0.2", "192.168.0.1"}),
+					resource.TestCheckResourceAttr("mydns_a_record_set.foo", "addresses.#", "2"),
+					testAccCheckDnsARecordSetExists(t, "mydns_a_record_set.foo", []interface{}{"192.168.0.2", "192.168.0.1"}),
 				),
 			},
 			resource.TestStep{
 				Config: testAccDnsARecordSet_update,
 				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("dns_a_record_set.foo", "addresses.#", "3"),
-					testAccCheckDnsARecordSetExists(t, "dns_a_record_set.foo", []interface{}{"10.0.0.3", "10.0.0.2", "10.0.0.1"}),
+					resource.TestCheckResourceAttr("mydns_a_record_set.foo", "addresses.#", "3"),
+					testAccCheckDnsARecordSetExists(t, "mydns_a_record_set.foo", []interface{}{"10.0.0.3", "10.0.0.2", "10.0.0.1"}),
 				),
 			},
 		},
@@ -40,7 +40,7 @@ func testAccCheckDnsARecordSetDestroy(s *terraform.State) error {
 	c := meta.(*DNSClient).c
 	srv_addr := meta.(*DNSClient).srv_addr
 	for _, rs := range s.RootModule().Resources {
-		if rs.Type != "dns_a_record_set" {
+		if rs.Type != "mydns_a_record_set" {
 			continue
 		}
 
@@ -117,7 +117,7 @@ func testAccCheckDnsARecordSetExists(t *testing.T, n string, addr []interface{})
 }
 
 var testAccDnsARecordSet_basic = fmt.Sprintf(`
-  resource "dns_a_record_set" "foo" {
+  resource "mydns_a_record_set" "foo" {
     zone = "example.com."
     name = "foo"
     addresses = ["192.168.0.1", "192.168.0.2"]
@@ -125,7 +125,7 @@ var testAccDnsARecordSet_basic = fmt.Sprintf(`
   }`)
 
 var testAccDnsARecordSet_update = fmt.Sprintf(`
-  resource "dns_a_record_set" "foo" {
+  resource "mydns_a_record_set" "foo" {
     zone = "example.com."
     name = "foo"
     addresses = ["10.0.0.1", "10.0.0.2", "10.0.0.3"]

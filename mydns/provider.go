@@ -50,16 +50,16 @@ func Provider() terraform.ResourceProvider {
 		},
 
 		DataSourcesMap: map[string]*schema.Resource{
-			"dns_a_record_set":     dataSourceDnsARecordSet(),
-			"dns_cname_record_set": dataSourceDnsCnameRecordSet(),
-			"dns_txt_record_set":   dataSourceDnsTxtRecordSet(),
+			"mydns_a_record_set":     dataSourceDnsARecordSet(),
+			"mydns_cname_record_set": dataSourceDnsCnameRecordSet(),
+			"mydns_txt_record_set":   dataSourceDnsTxtRecordSet(),
 		},
 
 		ResourcesMap: map[string]*schema.Resource{
-			"dns_a_record_set":    resourceDnsARecordSet(),
-			"dns_aaaa_record_set": resourceDnsAAAARecordSet(),
-			"dns_cname_record":    resourceDnsCnameRecord(),
-			"dns_ptr_record":      resourceDnsPtrRecord(),
+			"mydns_a_record_set":    resourceDnsARecordSet(),
+			"mydns_aaaa_record_set": resourceDnsAAAARecordSet(),
+			"dns_cname_record":      resourceDnsCnameRecord(),
+			"mydns_ptr_record":      resourceDnsPtrRecord(),
 		},
 
 		ConfigureFunc: configureProvider,

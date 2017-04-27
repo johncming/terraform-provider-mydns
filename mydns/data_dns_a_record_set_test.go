@@ -15,7 +15,7 @@ func TestAccDataDnsARecordSet_Basic(t *testing.T) {
 	}{
 		{
 			`
-			data "dns_a_record_set" "foo" {
+			data "mydns_a_record_set" "foo" {
 			  host = "127.0.0.1.nip.io"
 			}
 			`,
@@ -26,7 +26,7 @@ func TestAccDataDnsARecordSet_Basic(t *testing.T) {
 		},
 		{
 			`
-			data "dns_a_record_set" "ntp" {
+			data "mydns_a_record_set" "ntp" {
 			  host = "time-c.nist.gov"
 			}
 			`,
@@ -43,7 +43,7 @@ func TestAccDataDnsARecordSet_Basic(t *testing.T) {
 		ts := resource.TestStep{
 			Config: test.DataSourceBlock,
 			Check: resource.ComposeTestCheckFunc(
-				testCheckAttrStringArray(fmt.Sprintf("data.dns_a_record_set.%s", test.DataSourceName), "addrs", test.Expected),
+				testCheckAttrStringArray(fmt.Sprintf("data.mydns_a_record_set.%s", test.DataSourceName), "addrs", test.Expected),
 			),
 		}
 		steps = append(steps, ts)
