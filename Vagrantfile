@@ -5,4 +5,6 @@ Vagrant.configure("2") do |config|
     ansible.playbook = "vagrant.yml"
     ansible.verbose = true
   end
+
+  config.vm.network "private_network", type:"dhcp"
 end
