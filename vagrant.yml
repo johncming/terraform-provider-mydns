@@ -5,6 +5,9 @@
     - johncming.go
 
 - hosts: all
+  vars:
+    terraform_url: https://releases.hashicorp.com/terraform/0.9.4/terraform_0.9.4_linux_amd64.zip?_ga=1.218714461.557112566.1453211084
+    terraform_download_tmppath: /tmp/terraform.zip
   tasks:
     - blockinfile:
         path: "{{ ansible_user_dir }}/.terraformrc"
@@ -22,3 +25,19 @@
         src: /vagrant
         dest: "{{ ansible_user_dir}}/.go/src/github.com/johncming/terraform-provider-mydns"
         state: link
+
+    - get_url:
+        url: "{{ terraform_url }}"
+        dest: "{{ terraform_download_tmppath }}"
+
+    - apt:
+        name: unzip
+        state: present
+      become: yes
+
+    - unarchive:
+        src: "{{ terraform_download_tmppath }}"
+        dest: /usr/local/bin/
+        mode: 0755
+        remote_src: yes
+      become: yes
