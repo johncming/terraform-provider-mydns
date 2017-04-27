@@ -14,7 +14,7 @@
         create: yes
         block: |
           providers {
-              mydns = "/vagrant/"
+              mydns = "/vagrant/terraform-provider-mydns"
           }
 
     - file:

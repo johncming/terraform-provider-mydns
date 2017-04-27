@@ -1,3 +1,5 @@
 .vagrant/
 vendor/
 terraform-provider-mydns
+/example/terraform.tfstate
+/example/terraform.tfstate.backup

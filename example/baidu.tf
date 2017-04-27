@@ -3,5 +3,5 @@ data "mydns_a_record_set" "baidu" {
 }
 
 output "baidu_addrs" {
-  value = "${join(",", data.mydns_a_record_set.baidu.addrs)}"
+  value = "${join("\n", data.mydns_a_record_set.baidu.addrs)}"
 }
