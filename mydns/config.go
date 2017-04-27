@@ -1,9 +1,10 @@
-package dns
+package mydns
 
 import (
 	"fmt"
-	"github.com/miekg/dns"
 	"log"
+
+	"github.com/miekg/dns"
 )
 
 type Config struct {
