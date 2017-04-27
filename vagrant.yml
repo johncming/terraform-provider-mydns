@@ -1,26 +1,15 @@
 ---
 - hosts: all
   roles:
-    - johncming.emacs
+    # - johncming.emacs
     - johncming.go
 
 - hosts: all
   tasks:
-    - command: "go get {{ item }}"
-      with_items:
-        - github.com/hashicorp/terraform
-        - github.com/miekg/dns
-      environment:
-        GOPATH: "{{ ansible_user_dir }}/.go"
-        PATH: "{{ ansible_env.PATH }}:/usr/local/go/bin"
-      ignore_errors: yes
     - blockinfile:
         path: "{{ ansible_user_dir }}/.terraformrc"
         create: yes
         block: |
           providers {
-              mydns = "/vagrant/mydns"
+              mydns = "/vagrant/"
           }
-    - lineinfile:
-        path: "{{ ansible_user_dir }}/.bashrc"
-        line: "export GOPATH=$GOPATH:/vagrant/"
