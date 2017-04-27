@@ -13,3 +13,12 @@
           providers {
               mydns = "/vagrant/"
           }
+
+    - file:
+        path: "{{ ansible_user_dir}}/.go/src/github.com/johncming/"
+        state: directory
+
+    - file:
+        src: /vagrant
+        dest: "{{ ansible_user_dir}}/.go/src/github.com/johncming/terraform-provider-mydns"
+        state: link
