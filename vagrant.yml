@@ -6,7 +6,10 @@
 
 - hosts: all
   tasks:
-    - command: go get -u github.com/hashicorp/terraform
+    - command: "go get {{ item }}"
+      with_items:
+        - github.com/hashicorp/terraform
+        - github.com/miekg/dns
       environment:
         GOPATH: "{{ ansible_user_dir }}/.go"
         PATH: "{{ ansible_env.PATH }}:/usr/local/go/bin"
