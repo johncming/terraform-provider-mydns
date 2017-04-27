@@ -13,6 +13,11 @@ import (
 func Provider() terraform.ResourceProvider {
 	return &schema.Provider{
 		Schema: map[string]*schema.Schema{
+			"resolver": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "223.5.5.5:53",
+			},
 			"update": &schema.Schema{
 				Type:     schema.TypeList,
 				MaxItems: 1,
@@ -70,6 +75,13 @@ func configureProvider(d *schema.ResourceData) (interface{}, error) {
 
 	var server, keyname, keyalgo, keysecret string
 	var port int
+	var resolver string
+
+	if v, ok := d.GetOk("resolver"); ok {
+		resolver = v.(string)
+	} else {
+		resolver = "223.5.5.5:53"
+	}
 
 	// if the update block is missing, schema.EnvDefaultFunc is not called
 	if v, ok := d.GetOk("update"); ok {
@@ -113,6 +125,7 @@ func configureProvider(d *schema.ResourceData) (interface{}, error) {
 		keyname:   keyname,
 		keyalgo:   keyalgo,
 		keysecret: keysecret,
+		resolver:  resolver,
 	}
 
 	return config.Client()

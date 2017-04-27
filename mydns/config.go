@@ -13,6 +13,8 @@ type Config struct {
 	keyname   string
 	keyalgo   string
 	keysecret string
+
+	resolver string
 }
 
 type DNSClient struct {
@@ -21,6 +23,7 @@ type DNSClient struct {
 	keyname   string
 	keysecret string
 	keyalgo   string
+	resolver  string
 }
 
 // Configures and returns a fully initialized DNSClient
@@ -48,6 +51,8 @@ func (c *Config) Client() (interface{}, error) {
 		client.keyalgo = keyalgo
 		client.c.TsigSecret = map[string]string{c.keyname: c.keysecret}
 	}
+
+	client.resolver = c.resolver
 	return &client, nil
 }
 
