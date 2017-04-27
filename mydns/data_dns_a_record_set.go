@@ -2,10 +2,10 @@ package mydns
 
 import (
 	"fmt"
-	"net"
 	"sort"
 
 	"github.com/hashicorp/terraform/helper/schema"
+	"github.com/miekg/dns"
 )
 
 func dataSourceDnsARecordSet() *schema.Resource {
@@ -28,19 +28,18 @@ func dataSourceDnsARecordSet() *schema.Resource {
 func dataSourceDnsARecordSetRead(d *schema.ResourceData, meta interface{}) error {
 	host := d.Get("host").(string)
 
-	records, err := net.LookupIP(host)
+	m := new(dns.Msg)
+	m.SetQuestion(dns.Fqdn(host), dns.TypeA)
+	resposeMsg, err := dns.Exchange(m, "223.5.5.5:53")
 	if err != nil {
 		return fmt.Errorf("error looking up A records for %q: %s", host, err)
 	}
 
 	addrs := make([]string, 0)
 
-	for _, ip := range records {
-		// LookupIP returns A (IPv4) and AAAA (IPv6) records
-		// Filter out AAAA records
-		if ipv4 := ip.To4(); ipv4 != nil {
-			addrs = append(addrs, ipv4.String())
-		}
+	for _, rr := range resposeMsg.Answer {
+		ip := rr.(*dns.A).A
+		addrs = append(addrs, ip.String())
 	}
 
 	sort.Strings(addrs)
