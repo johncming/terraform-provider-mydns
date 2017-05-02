@@ -12,3 +12,8 @@ Init env
         mydns = "/vagrant/mydns"
     }
     ```
+
+Todo
+--------
+
+1. Straighten out the env of development.(go env)
